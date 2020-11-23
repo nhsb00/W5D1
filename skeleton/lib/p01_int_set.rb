@@ -81,10 +81,10 @@ class ResizingIntSet
   end
 
   def insert(num)
-    return false if include?(num)
-    self[num] << num 
-    @count += 1
-    resize! if num_buckets == @count
+    return false if include?(num) # O(1)
+    self[num] << num # O(1)
+    @count += 1 # O(1)
+    resize! if num_buckets == @count # sometimes O(1) sometimes O(n) average O(1)
   end
 
   def remove(num)
@@ -111,13 +111,13 @@ class ResizingIntSet
 
   def resize!
     # old = self.store
+    new_store = Array.new(num_buckets * 2) { Array.new } # O(n)
 
-    new_store = Array.new(num_buckets*2) { Array.new }
-    @store.each do |bucket|
-      bucket.each do |ele|
-        new_store[ele % new_store.length] << ele
+    @store.each do |bucket| # O(n)
+      bucket.each do |ele|    # O(1)
+        new_store[ele % new_store.length] << ele # O(1)
       end
     end
-    @store = new_store
+    @store = new_store # O(1)
   end
 end
