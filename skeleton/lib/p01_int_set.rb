@@ -112,12 +112,12 @@ class ResizingIntSet
   def resize!
     # old = self.store
 
-    old = Array.new(num_buckets*2) { Array.new }
+    new_store = Array.new(num_buckets*2) { Array.new }
     @store.each do |bucket|
       bucket.each do |ele|
-        old[ele % old.length] << ele
+        new_store[ele % new_store.length] << ele
       end
     end
-    @store = old
+    @store = new_store
   end
 end
